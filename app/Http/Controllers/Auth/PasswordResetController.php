@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Jobs\SendForgetPasswordEmailJob;
 
 class PasswordResetController extends Controller
 {
@@ -30,10 +31,16 @@ class PasswordResetController extends Controller
 
 
         // Send verification email
-      Mail::to($request->email)->send(new PasswordResetEmail([
-            'token' => $token,
-            'email' => $request->email
-        ]));
+      $details=[
+        'token' => $token,
+        'email' => $request->email
+      ];
+
+          // 5. Queue the job instead of sending immediately
+    \Log::info('Queuing password reset email for ' . $request->email);
+    SendForgetPasswordEmailJob::dispatch($details);
+
+
 
 
 

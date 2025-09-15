@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyRegistrationEmail;
 use App\Http\Requests\RegisterRequest;
+use App\Jobs\SendVerificationEmailJob;
 use App\Http\Requests\ProfileUpdateRequest;
 
 
@@ -40,7 +41,7 @@ class AuthController extends Controller
             'verification_token' => Str::random(64)
         ]);
         \Log::info('Sending verification email to ' . $user->email);
-        Mail::to($user->email)->send(new VerifyRegistrationEmail($user));
+       SendVerificationEmailJob::dispatch($user);
         \Log::info('Email sent.');
 
         return response()->json([
