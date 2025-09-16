@@ -27,7 +27,7 @@ var DatatableAPI = function() {
         // Setting datatable defaults
         $.extend( $.fn.dataTable.defaults, {
             autoWidth: false,
-            columnDefs: [{ 
+            columnDefs: [{
                 orderable: false,
                 width: 100,
                 targets: [ 5 ]
@@ -87,12 +87,12 @@ var DatatableAPI = function() {
                             var val = $.fn.dataTable.util.escapeRegex(
                                 $(this).val()
                             );
-     
+
                             column
                                 .search( val ? '^'+val+'$' : '', true, false )
                                 .draw();
                         });
-     
+
                     column.data().unique().sort().each(function (d, j) {
                         select.append('<option value="'+d.replace(/<(?:.|\n)*?>/gm, '')+'">'+d.replace(/<(?:.|\n)*?>/gm, '')+'</option>')
                     });

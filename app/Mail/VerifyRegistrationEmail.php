@@ -24,8 +24,10 @@ class VerifyRegistrationEmail extends Mailable
     {
         $this->user =$user;
            // Generate verification URL containing the unique token
-        $this->url = url('/verify-email/' . $this->user->verification_token);
-    }
+       $this->url = route('verify.email', [
+             'token' => $this->user->verification_token,
+            'email' => $this->user->email]);
+        }
 
     /**
      * Get the message envelope.

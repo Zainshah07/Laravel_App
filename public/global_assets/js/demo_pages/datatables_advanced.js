@@ -27,7 +27,7 @@ var DatatableAdvanced = function() {
         // Setting datatable defaults
         $.extend( $.fn.dataTable.defaults, {
             autoWidth: false,
-            columnDefs: [{ 
+            columnDefs: [{
                 orderable: false,
                 width: 100,
                 targets: [ 5 ]
@@ -54,7 +54,7 @@ var DatatableAdvanced = function() {
         // Highlighting rows and columns on mouseover
         var lastIdx = null;
         var table = $('.datatable-highlight').DataTable();
-         
+
         $('.datatable-highlight tbody').on('mouseover', 'td', function() {
             var colIdx = table.cell(this).index().column;
 
@@ -68,7 +68,7 @@ var DatatableAdvanced = function() {
 
         // Columns rendering
         $('.datatable-columns').dataTable({
-            columnDefs: [ 
+            columnDefs: [
                 {
                     // The `data` parameter refers to the data for the cell (defined by the
                     // `data` option, which defaults to the column being worked with, in

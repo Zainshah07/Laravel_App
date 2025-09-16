@@ -61,7 +61,7 @@
 									</label>
 								</div>
 
-								<a href="login_password_recover.html" class="ml-auto">Forgot password?</a>
+								<a href="{{ route('forgot.password') }}" class="ml-auto">Forgot password?</a>
 							</div>
 
 							<div class="form-group">

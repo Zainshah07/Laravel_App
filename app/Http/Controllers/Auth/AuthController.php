@@ -52,15 +52,14 @@ class AuthController extends Controller
 
     // Token Verification and updation after Email verification
 
-     public function verify($token){
-        $user= User::where('verification_token',$token)->first();
+     public function verify($token , $email){
+        $user= User::where('verification_token' , $token)->whereEmail($email)->first();
           if (!$user) {
             return redirect()->with('error', 'Invalid verification link.');
         }
 
          // Activate user
         $user->update([
-
             'is_active' => true,
             'email_verified_at' => now(),
             'verification_token' => null

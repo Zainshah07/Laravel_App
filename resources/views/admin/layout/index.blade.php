@@ -357,7 +357,7 @@
                         data-toggle="dropdown">
                         <img src="../../../../global_assets/images/placeholders/placeholder.jpg"
                             class="rounded-circle mr-2" height="34" alt="">
-                        <span>Victoria</span>
+                        <span>{{ auth()->user()->name }}</span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right">
@@ -414,7 +414,7 @@
                             </div>
 
                             <div class="media-body">
-                                <div class="media-title font-weight-semibold">Victoria Baker</div>
+                                <div class="media-title font-weight-semibold">{{ auth()->user()->name }}</div>
                                 <div class="font-size-xs opacity-50">
                                     <i class="icon-pin font-size-sm"></i> &nbsp;Santa Ana, CA
                                 </div>
@@ -451,20 +451,13 @@
                             <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Layouts</span></a>
 
                             <ul class="nav nav-group-sub" data-submenu-title="Layouts">
-                                <li class="nav-item"><a href="index.html" class="nav-link active">Default layout</a>
+                                <li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link active">Category</a>
                                 </li>
-                                <li class="nav-item"><a href="../../../../layout_2/LTR/default/full/index.html"
-                                        class="nav-link">Layout 2</a></li>
-                                <li class="nav-item"><a href="../../../../layout_3/LTR/default/full/index.html"
-                                        class="nav-link">Layout 3</a></li>
-                                <li class="nav-item"><a href="../../../../layout_4/LTR/default/full/index.html"
-                                        class="nav-link">Layout 4</a></li>
-                                <li class="nav-item"><a href="../../../../layout_5/LTR/default/full/index.html"
-                                        class="nav-link">Layout 5</a></li>
-                                <li class="nav-item"><a href="../../../../layout_6/LTR/default/full/index.html"
-                                        class="nav-link disabled">Layout 6 <span
-                                            class="badge bg-transparent align-self-center ml-auto">Coming
-                                            soon</span></a></li>
+                                <li class="nav-item"><a href="{{ route('sub_category.index') }}"
+                                        class="nav-link">Sub-Catagory</a></li>
+                                <li class="nav-item"><a href=""
+                                        class="nav-link">Product</a></li>
+
                             </ul>
                         </li>
 
