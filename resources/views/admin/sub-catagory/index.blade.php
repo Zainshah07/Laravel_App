@@ -14,7 +14,7 @@
 @section('content')
     <div class="card">
           <div class="card-header header-elements-inline">
-         <h5 class="card-title">Services</h5>
+         <h5 class="card-title">Sub-Category</h5>
 
             <button class="btn bg-primary" data-toggle="modal" data-target="#modal_form_vertical">Create</button>
 	   </div>
@@ -31,7 +31,7 @@
 
                     </tr>
                 </thead>
-                <tbody>
+                <tbody >
                     @foreach ($sub_categories as $sub_category)
                         <tr>
                             <td>{{ $sub_category->name }}</td>
@@ -57,18 +57,13 @@
 									<h5 class="modal-title">Vertical form</h5>
 								</div>
 
-								<form action="#">
+								<form action="" id="subCategoryForm">
 									<div class="modal-body">
 										<div class="form-group">
 											<div class="row">
-												<div class="col-sm-6">
-													<label>First name</label>
-													<input type="text" placeholder="Eugene" class="form-control">
-												</div>
-
-												<div class="col-sm-6">
-													<label>Last name</label>
-													<input type="text" placeholder="Kopyov" class="form-control">
+												<div class="col-md-12">
+													<label>Name</label>
+													<input type="text" placeholder="Enter the sub category" name="name" class="form-control">
 												</div>
 											</div>
 										</div>
@@ -76,56 +71,35 @@
 										<div class="form-group">
 											<div class="row">
 												<div class="col-sm-6">
-													<label>Address line 1</label>
-													<input type="text" placeholder="Ring street 12" class="form-control">
+													<label>Choose Category</label>
+                                                     <div>
+													<select class="form-control" name="category_id">
+                                                           <option selected disabled> Select Category </option>
+                                                            @foreach($categories as $category)
+                                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                            @endforeach
+                                                        </select>
+
+                                                </div>
 												</div>
 
 												<div class="col-sm-6">
-													<label>Address line 2</label>
-													<input type="text" placeholder="building D, flat #67" class="form-control">
+													<label>Is Active</label>
+													<select name="is_active" id="is_active" class="form-control">
+                                                          <option selected disabled> Select Status </option>
+                                                          <option value="1" >Active</option>
+                                                          <option value="0">Inactive</option>
+                                                    </select>
 												</div>
 											</div>
 										</div>
 
-										<div class="form-group">
-											<div class="row">
-												<div class="col-sm-4">
-													<label>City</label>
-													<input type="text" placeholder="Munich" class="form-control">
-												</div>
 
-												<div class="col-sm-4">
-													<label>State/Province</label>
-													<input type="text" placeholder="Bayern" class="form-control">
-												</div>
-
-												<div class="col-sm-4">
-													<label>ZIP code</label>
-													<input type="text" placeholder="1031" class="form-control">
-												</div>
-											</div>
-										</div>
-
-										<div class="form-group">
-											<div class="row">
-												<div class="col-sm-6">
-													<label>Email</label>
-													<input type="text" placeholder="eugene@kopyov.com" class="form-control">
-													<span class="help-block">name@domain.com</span>
-												</div>
-
-												<div class="col-sm-6">
-													<label>Phone #</label>
-													<input type="text" placeholder="+99-99-9999-9999" data-mask="+99-99-9999-9999" class="form-control">
-													<span class="help-block">+99-99-9999-9999</span>
-												</div>
-											</div>
-										</div>
 									</div>
 
 									<div class="modal-footer">
 										<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-										<button type="submit" class="btn btn-primary">Submit form</button>
+										<button class="btn btn-primary">Submit form</button>
 									</div>
 								</form>
 							</div>
@@ -136,8 +110,76 @@
 @section('js')
     <script src="{{ asset('../global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('../global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-
-    <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="{{ asset('../global_assets/js/demo_pages/datatables_basic.js') }}"></script>
+
+    <script>
+
+        $(document).ready(function(){
+
+            $('#subCategoryForm').validate({
+                rules:{
+                    name:{
+                        required:true,
+                        minlength:3
+                    },
+                    category_id:{
+                        required:true
+                    },
+                    is_active:{
+                        required:true
+                    }
+
+                },
+
+                messages:{
+                    name:{
+                        required:'Sub category name required',
+                        minlength:'name must have atleast 3 characters'
+                    },
+                    category_id:{
+                        required:'must choose a category'
+                    },
+                    is_active:{
+                        required:'select the status'
+                    }
+
+                },
+
+                errorElement:'small',
+                errorClass:'text-danger',
+                errorPlacement:function(error,element){
+                    error.insertAfter(element);
+                },
+                highlight:function(element){
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight:function(element){
+                    $(element).removeClass('is-invalid');
+                },
+                 invalidHandler:function(event, validator){
+                        if (validator.numberOfInvalids()) {
+                            toastr.error("Please correct the highlighted errors before submitting.");
+                        }
+                },
+
+                submitHandler:function(form){
+                    $.ajax({
+                        $url: "{{ route('sub-category.store') }}",
+                        type:"POST",
+                        data:$(form).serialize(),
+                        success:function(response){
+                            toastr.success(response.messaage,"success");
+                            $("#modal_form_vertical").modal('hide');
+                            $("#")
+                        }
+                    });
+
+                }
+            })
+
+        });
+
+
+    </script>
 
 @endsection

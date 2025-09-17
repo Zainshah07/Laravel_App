@@ -67,7 +67,7 @@
                                     <label for="is_active">Is Active</label>
                                     <select name="is_active" id="is_active" class="form-control">
                                         <option selected disabled> Select Status </option>
-                                        <option value="1" selected>Active</option>
+                                        <option value="1" >Active</option>
                                         <option value="0">Inactive</option>
                                     </select>
                                 </div>
@@ -94,7 +94,7 @@
 
     <script>
         $(document).ready(function() {
-            // jQuery Validation
+
             $("#categoryForm").validate({
                 rules: {
                     name: {
@@ -114,11 +114,11 @@
                         required: "Please select status"
                     }
                 },
-                errorClass: "is-invalid", // Add Bootstrap red border
-                validClass: "is-valid", // Add Bootstrap green border
+                errorClass: "is-invalid",
+                validClass: "is-valid",
                 errorElement: "div",
                 errorPlacement: function(error, element) {
-                    error.addClass("invalid-feedback"); // Bootstrap class for errors
+                    error.addClass("invalid-feedback"); 
                     element.closest(".form-group").append(error);
                 },
                 highlight: function(element) {

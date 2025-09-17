@@ -39,7 +39,7 @@ Route::middleware(['auth'])->controller(CategoryController::class)->group(functi
 //Sub Category Routes//
 Route::middleware(['auth'])->controller(SubCategoryController::class)->group(function(){
     Route::get('/sub-category','index')->name('sub_category.index');
-    Route::post('');
+    Route::post('/sub-category','store')->name('sub-category.store');
 });
 
 

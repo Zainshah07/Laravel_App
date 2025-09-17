@@ -16,4 +16,8 @@ class Category extends Model
         'user_id',
         'is_active',
     ];
+
+    public function sub_category(){
+        return $this->hasMany(SubCategory::class);
+    }
 }
