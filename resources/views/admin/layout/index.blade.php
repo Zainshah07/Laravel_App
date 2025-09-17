@@ -15,7 +15,7 @@
     <div class="navbar navbar-expand-md navbar-dark">
         <div class="navbar-brand">
             <a href="index.html" class="d-inline-block">
-                <img src="../../../../global_assets/images/logo_light.png" alt="">
+                <img src="{{ asset("global_assets/images/logo_light.png") }}" alt="">
             </a>
         </div>
 
@@ -581,13 +581,6 @@
     </div>
 
     {{-- ------Page-Content--------- --}}
-
-
-
-
-
-
-
 
 
     @include('admin.layout.partials.js')
