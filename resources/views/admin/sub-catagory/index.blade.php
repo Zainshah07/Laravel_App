@@ -16,11 +16,11 @@
             <table class=" table datatable-basic" id="subCategoryTable">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Name</th>
                         <th>Slug</th>
-                        <th>User_Id</th>
-                        <th>Category_Id</th>
-                        <th>Is_Active</th>
+                        <th>Category</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -38,11 +38,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h5 class="modal-title" id="js-modal-title">Add Sub-Category</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Vertical form</h5>
                 </div>
 
                 <form action="" id="subCategoryForm">
+                    <input type="hidden" name="sub_category_id" id="js-sub-category-id" value="">
                     <div class="modal-body">
                         <div class="form-group">
                             <div class="row">
@@ -80,7 +81,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                        <button class="btn btn-primary">Submit form</button>
+                        <button class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>
@@ -141,7 +142,7 @@
 
                 submitHandler: function(form) {
                     $.ajax({
-                        $url: "{{ route('sub-category.store') }}",
+                        url: "{{ route('sub-category.store') }}",
                         type: "POST",
                         data: $(form).serialize(),
                         beforeSend: function(xhr) {
@@ -150,7 +151,7 @@
                         success: function(response) {
                             console.log(response);
                             if(response.success){
-                            toastr.success(response.messaage, "success");
+                            toastr.success(response.message, "success");
                             $("#js-add-sub-category-modal").modal('hide');
                             $("#js-subcategory-table-body").html('');
                             $("#js-subcategory-table-body").html(response.html);
@@ -170,7 +171,7 @@
 
 
             // edit category start here
-            $("#js-edit-sub-category-button").click(function() {
+            $(document).on('click', '#js-edit-sub-category-button', function() {
                 event.preventDefault();
                 var id = $(this).data("id");
                 var href = "{{ route('sub-category.edit', ':id') }}".replace(':id', id);
@@ -185,9 +186,11 @@
                         console.log(response);
                         if(response.success){
                             getDynamicDropdownData("{{ route('get.categories') }}", "#js-category-dropdown");
+                            $("#js-sub-category-id").val(response.data.id);
                             $("#js-sub-category-name").val(response.data.name);
                             $("#js-is-active").val(response.data.is_active);
                             $("#js-category-dropdown").val(response.data.category_id).trigger("change");
+                            $("#js-modal-title").text("Edit Sub-Category");
                             $("#js-add-sub-category-modal").modal("show");
                         }
                         else{
@@ -200,11 +203,44 @@
             // edit category end here
 
             // delete category start here
-
+            $(document).on('click', '#js-delete-sub-category-button', function() {
+                event.preventDefault();
+                var id = $(this).data("id");
+                
+                if (confirm("Are you sure you want to delete this sub-category?")) {
+                    var href = "{{ route('sub-category.destroy', ':id') }}".replace(':id', id);
+                    $.ajax({
+                        url: href,
+                        type: "DELETE",
+                        beforeSend: function(xhr) {
+                            xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            if(response.success){
+                                toastr.success(response.message, "success");
+                                $("#js-subcategory-table-body").html('');
+                                $("#js-subcategory-table-body").html(response.html);
+                            }
+                            else{
+                                toastr.error(response.message, "error");
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            toastr.error("An error occurred while deleting the sub-category.", "error");
+                        }
+                    });
+                }
+                return false;
+            });
             // delete category end here
 
             $("#js-add-sub-category-button").click(function() {
                 getDynamicDropdownData("{{ route('get.categories') }}", "#js-category-dropdown");
+                $("#js-modal-title").text("Add Sub-Category");
+                $("#js-sub-category-id").val("");
+                $("#subCategoryForm")[0].reset();
+                $(".form-control").removeClass("is-valid is-invalid");
                 $("#js-add-sub-category-modal").modal("show");
             });
 

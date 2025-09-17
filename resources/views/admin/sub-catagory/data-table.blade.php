@@ -1,9 +1,9 @@
 @if(!@empty($sub_categories))
 @foreach ($sub_categories as $sub_category)
     <tr>
+        <td>{{ $loop->iteration }}</td>
         <td>{{ $sub_category->name }}</td>
         <td>{{ $sub_category->slug }}</td>
-        <td>{{ $sub_category->user->name }}</td>
         <td>{{ $sub_category->category->name }}</td>
         <td><span class="label label-success">{{ $sub_category->is_active ? 'Active' : 'Inactive' }}</span></td>
         <td>
