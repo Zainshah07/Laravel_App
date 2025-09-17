@@ -149,14 +149,13 @@
                             xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
                         },
                         success: function(response) {
-                            console.log(response);
                             if(response.success){
-                            toastr.success(response.message, "success");
-                            $("#js-add-sub-category-modal").modal('hide');
-                            $("#js-subcategory-table-body").html('');
-                            $("#js-subcategory-table-body").html(response.html);
-                            $("#subCategoryForm")[0].reset();
-                            $(".form-control").removeClass("is-valid");
+                                toastr.success(response.message, "success");
+                                $("#js-add-sub-category-modal").modal('hide');
+                                $("#js-subcategory-table-body").html('');
+                                $("#js-subcategory-table-body").html(response.html);
+                                $("#subCategoryForm")[0].reset();
+                                $(".form-control").removeClass("is-valid");
                             }
                             else{
                                 toastr.error(response.message, "error");
@@ -175,6 +174,7 @@
                 event.preventDefault();
                 var id = $(this).data("id");
                 var href = "{{ route('sub-category.edit', ':id') }}".replace(':id', id);
+                getDynamicDropdownData("{{ route('get.categories') }}", "#js-category-dropdown");
                 $.ajax({
                     url: href,
                     type: "GET",
@@ -183,15 +183,13 @@
                     },
                     success: function(response) 
                     {
-                        console.log(response);
                         if(response.success){
-                            getDynamicDropdownData("{{ route('get.categories') }}", "#js-category-dropdown");
                             $("#js-sub-category-id").val(response.data.id);
                             $("#js-sub-category-name").val(response.data.name);
                             $("#js-is-active").val(response.data.is_active);
-                            $("#js-category-dropdown").val(response.data.category_id).trigger("change");
+                            $("#js-category-dropdown").val(response.data.category_id).trigger('change');
                             $("#js-modal-title").text("Edit Sub-Category");
-                            $("#js-add-sub-category-modal").modal("show");
+                            $("#js-add-sub-category-modal").modal('show');
                         }
                         else{
                             toastr.error(response.message, "error");
@@ -206,32 +204,41 @@
             $(document).on('click', '#js-delete-sub-category-button', function() {
                 event.preventDefault();
                 var id = $(this).data("id");
-                
-                if (confirm("Are you sure you want to delete this sub-category?")) {
-                    var href = "{{ route('sub-category.destroy', ':id') }}".replace(':id', id);
-                    $.ajax({
-                        url: href,
-                        type: "DELETE",
-                        beforeSend: function(xhr) {
-                            xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
-                        },
-                        success: function(response) {
-                            console.log(response);
-                            if(response.success){
-                                toastr.success(response.message, "success");
-                                $("#js-subcategory-table-body").html('');
-                                $("#js-subcategory-table-body").html(response.html);
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You want to delete this sub-category!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var href = "{{ route('sub-category.destroy', ':id') }}".replace(':id', id);
+                        $.ajax({
+                            url: href,
+                            type: "DELETE",
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                if(response.success){
+                                    toastr.success(response.message, "success");
+                                    $("#js-subcategory-table-body").html('');
+                                    $("#js-subcategory-table-body").html(response.html);
+                                }
+                                else{
+                                    toastr.error(response.message, "error");
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                toastr.error("An error occurred while deleting the sub-category.", "error");
                             }
-                            else{
-                                toastr.error(response.message, "error");
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            toastr.error("An error occurred while deleting the sub-category.", "error");
-                        }
-                    });
-                }
-                return false;
+                        });
+                    }
+                });
             });
             // delete category end here
 
@@ -240,8 +247,9 @@
                 $("#js-modal-title").text("Add Sub-Category");
                 $("#js-sub-category-id").val("");
                 $("#subCategoryForm")[0].reset();
+                $("#js-category-dropdown").trigger('change');
                 $(".form-control").removeClass("is-valid is-invalid");
-                $("#js-add-sub-category-modal").modal("show");
+                $("#js-add-sub-category-modal").modal('show');
             });
 
         });

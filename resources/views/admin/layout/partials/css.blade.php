@@ -7,4 +7,5 @@
 <link href="{{ asset("admin/assets/css/colors.min.css") }}" rel="stylesheet" type="text/css">
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-    
+
+<link href="{{ asset("admin/assets/css/sweetalert2/sweetalert2.min.css") }}" rel="stylesheet" type="text/css">

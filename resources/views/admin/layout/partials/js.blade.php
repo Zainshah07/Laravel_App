@@ -16,4 +16,5 @@
 <script src="{{ asset("global_assets/js/demo_pages/datatables_basic.js") }}"></script>
 <script src="{{ asset("global_assets/js/demo_pages/login.js") }}"></script>
 <script src="{{ asset("global_assets/js/dropdown.js") }}"></script>
+<script src="{{ asset("admin/assets/js/sweetalert2/sweetalert2.min.js") }}"></script>
 
