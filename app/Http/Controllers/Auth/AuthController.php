@@ -72,9 +72,6 @@ class AuthController extends Controller
 
 
     public function loginAction(LoginRequest $request){
-            \Log::info('loginCheck endpoint called', $request->all());
-
-
         $user= User::where('email',$request->email)->first();
 
         if(!$user){
@@ -99,7 +96,7 @@ class AuthController extends Controller
         }
 
          // ✅ Check if "remember me" checkbox was selected
-    $remember = $request->boolean('remember'); // this will be true if checkbox is checked
+        $remember = $request->boolean('remember'); // this will be true if checkbox is checked
 
         Auth::login($user, $remember);
 
