@@ -11,7 +11,7 @@ class RegisterRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;  //if false it will not validate at backend
+        return true;  // if false it will not validate at backend
     }
 
     /**
@@ -23,9 +23,9 @@ class RegisterRequest extends FormRequest
     {
         return [
 
-            'name'=>'required|min:3',
-            'email'=>'required|email',
-            'password'=>'required|confirmed|min:6'
+            'name' => 'required|min:3',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:6',
 
         ];
     }

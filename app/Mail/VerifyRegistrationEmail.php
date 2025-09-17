@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -14,20 +13,22 @@ class VerifyRegistrationEmail extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+
     public $url;
 
     /**
      * Create a new message instance.
-     *  @param $user The registered user object
+     *
+     * @param  $user  The registered user object
      */
     public function __construct($user)
     {
-        $this->user =$user;
-           // Generate verification URL containing the unique token
-       $this->url = route('verify.email', [
-             'token' => $this->user->verification_token,
+        $this->user = $user;
+        // Generate verification URL containing the unique token
+        $this->url = route('verify.email', [
+            'token' => $this->user->verification_token,
             'email' => $this->user->email]);
-        }
+    }
 
     /**
      * Get the message envelope.
@@ -46,7 +47,7 @@ class VerifyRegistrationEmail extends Mailable
     {
         return new Content(
             markdown: 'emails.verify',
-            with: [ 'url' => $this->url, 'user' => $this->user ]  // Pass data to Blade view
+            with: ['url' => $this->url, 'user' => $this->user]  // Pass data to Blade view
 
         );
     }

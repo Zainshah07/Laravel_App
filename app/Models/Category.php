@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory, SoftDeletes; // <--- Enable Soft Deletes
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -17,7 +17,12 @@ class Category extends Model
         'is_active',
     ];
 
-    public function sub_category(){
+    const ACTIVE_STATUS = 1;
+
+    const INACTIVE_STATUS = 0;
+
+    public function sub_category()
+    {
         return $this->hasMany(SubCategory::class);
     }
 }

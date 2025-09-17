@@ -22,9 +22,9 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-             'name'=>'required|min:3',
+            'name' => 'required|min:3',
             'phone' => 'nullable|string|max:15',
-            'profile_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'profile_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 }

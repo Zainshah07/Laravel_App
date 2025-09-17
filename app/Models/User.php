@@ -25,7 +25,7 @@ class User extends Authenticatable
         'profile_image',
         'is_active',
         'verification_token',
-         'email_verified_at',
+        'email_verified_at',
     ];
 
     /**
@@ -48,11 +48,11 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'in_active'=>'boolean'
+            'in_active' => 'boolean',
         ];
     }
 
-     /**
+    /**
      * Mutator: Store profile image automatically in storage/app/public/profile_images
      */
     // public function setProfileImageAttribute($value)
@@ -67,7 +67,7 @@ class User extends Authenticatable
     //  */
     public function getProfileImageAttribute($value)
     {
-        return $value ? asset('storage/' . $value) : asset('default-profile.png');
+        return $value ? asset('storage/'.$value) : asset('default-profile.png');
         // fallback image if user has no profile image
     }
 }

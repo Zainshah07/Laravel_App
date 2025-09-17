@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Document</title>
     @include('admin.layout.partials.css')
 </head>
@@ -453,15 +454,13 @@
                             <ul class="nav nav-group-sub" data-submenu-title="Layouts">
                                 <li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link active">Category</a>
                                 </li>
-                                <li class="nav-item"><a href="{{ route('sub_category.index') }}"
+                                <li class="nav-item"><a href="{{ route('sub-category.index') }}"
                                         class="nav-link">Sub-Catagory</a></li>
                                 <li class="nav-item"><a href=""
                                         class="nav-link">Product</a></li>
 
                             </ul>
                         </li>
-
-
 
                     </ul>
                 </div>

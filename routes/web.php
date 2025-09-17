@@ -1,16 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\DropdownController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('auth.login');
 });
-
-
-
 
 Route::resource('users', UserController::class);
 
@@ -23,12 +20,8 @@ Route::get('/catagory', function () {
     return view('admin.catagory.index');
 });
 
-require __DIR__.'/admin.php';
+// Dropdown Routes
+Route::get('/get-categories', [DropdownController::class, 'getCategories'])->name('get.categories');
 
-Route::get('/test-email', function () {
-    return view('emails.password-reset', [
-        'token' => '123456',
-        'email' => 'demo@example.com',
-    ]);
-});
+require __DIR__.'/admin.php';
 
