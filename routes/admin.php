@@ -18,6 +18,11 @@ Route::controller(AuthController::class)->group(function () {
 
 });
 
+//dashboard//
+Route::get('/dashboard',function(){
+    return view('admin.dashboard.index');
+})->name('dashboard.index');
+
 // Profile update Routes//
 
 Route::middleware(['auth'])->group(function () {

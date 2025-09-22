@@ -169,9 +169,7 @@
                         required: true
                     },
 
-                    sub_category_id: {
-                        required: true
-                    },
+
 
                     unit_price: {
                         required: true
@@ -196,9 +194,7 @@
                         required: "select a category"
                     },
 
-                    sub_category_id: {
-                        required: "select a sub-category"
-                    },
+                 
 
                     unit_price: {
                         required: "enter the unit price"

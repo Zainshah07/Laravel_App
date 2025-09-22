@@ -192,8 +192,12 @@ $(document).ready(function () {
             type:"Post",
             data:$(form).serialize(),
             success:function(){
-                toastr.success("successfully added user");
-                form.reset();
+                toastr.success("verification email sent! ");
+
+                     setTimeout(() => {
+                            window.location.href = "{{ route('login') }}"; // redirect after login
+                        }, 1000);
+                   form.reset();
                 $(".is_invalid").removeClass("is_invalid");
             },
             error:function(xhr){

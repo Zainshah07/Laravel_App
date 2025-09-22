@@ -362,7 +362,7 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
+                        <a href="{{ route('profile') }}" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
                         <a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>
                         <a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages
                             <span class="badge badge-pill bg-blue ml-auto">58</span></a>
@@ -440,7 +440,7 @@
                                 title="Main"></i>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{{ route('dashboard.index') }}" class="nav-link">
                                 <i class="icon-home4"></i>
                                 <span>
                                     Dashboard

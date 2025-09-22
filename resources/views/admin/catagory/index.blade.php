@@ -87,6 +87,9 @@
 @section('js')
     <script>
         $(document).ready(function() {
+            $("#js-add-category-button").click(function(){
+                $("#categoryForm")[0].reset();
+            });
 
             $("#categoryForm").validate({
                 rules: {
@@ -135,7 +138,7 @@
                                 $('#js-add-category-modal').modal('hide');
                                 $('#categoryTableBody').html();
                                 $('#categoryTableBody').html(response.html);
-                                $('#categoryForm')[0].reset();
+                                $("#categoryForm")[0].reset();
                                 $(".form-control").removeClass("is-valid");
                             }
 

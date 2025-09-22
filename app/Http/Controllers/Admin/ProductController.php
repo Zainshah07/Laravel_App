@@ -27,7 +27,7 @@ class ProductController extends Controller
                 'sku'=>strtoupper(Str::random(4)),
                 'quantity'=>$request->quantity,
                 'category_id'=>$request->category_id,
-                'sub_category_id' => $request->sub_category_id,
+                'sub_category_id' => $request->sub_category_id ?: null,
                 'unit_price'=>$request->unit_price,
                 'cost_price_per_unit'=>$request->cost_price_per_unit,
                 'is_active'=>$request->is_active,

@@ -25,4 +25,3 @@ Route::get('/get-categories', [DropdownController::class, 'getCategories'])->nam
 Route::get('/get-sub-categories',[DropdownController::class, 'getSubCategories'])->name('get.sub-categories');
 
 require __DIR__.'/admin.php';
-
