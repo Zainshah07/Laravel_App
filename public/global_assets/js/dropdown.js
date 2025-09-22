@@ -1,4 +1,3 @@
-
 // Function to get dynamic dropdown data
 function getDynamicDropdownData(url, target, callback) {
     $.ajax({

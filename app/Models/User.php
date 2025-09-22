@@ -52,22 +52,14 @@ class User extends Authenticatable
         ];
     }
 
-    /**
-     * Mutator: Store profile image automatically in storage/app/public/profile_images
-     */
-    // public function setProfileImageAttribute($value)
-    // {
-    //     if ($value && is_file($value)) {
-    //         // Store the file and set the path in DB
-    //         $this->attributes['profile_image'] = $value->store('profile_images', 'public');
-    //     }
-    // }
-
-    //  * Accessor: Always return full URL of profile image
-    //  */
     public function getProfileImageAttribute($value)
     {
         return $value ? asset('storage/'.$value) : asset('default-profile.png');
         // fallback image if user has no profile image
+    }
+
+     public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }

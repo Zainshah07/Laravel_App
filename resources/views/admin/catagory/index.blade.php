@@ -5,30 +5,27 @@
     Catagory
 @endsection
 @section('header-content')
-    <div class="page-header-content">
-        <div class="page-title">
-            <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Datatables</span> - Basic</h4>
-        </div>
-    </div>
+
 @endsection
 @section('content')
     <div class="card">
         <div class="card-header header-elements-inline">
             <h5 class="card-title">Category</h5>
 
-            <button class="btn bg-primary" data-toggle="modal" data-target="#modal_form_vertical">Create</button>
+            <button class="btn bg-primary" id="js-add-category-button" data-toggle="modal" data-target="#js-add-category-modal">Create</button>
         </div>
 
         <div class="panel panel-flat">
             <table class=" table datatable-basic" id="categoryTable">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Name</th>
                         <th>Slug</th>
                         <th>User_Id</th>
-                        <th>Is_Active</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+
                     </tr>
                 </thead>
                 <tbody id="categoryTableBody">
@@ -40,23 +37,25 @@
 
     </div>
     <!-- Vertical form modal -->
-    <div id="modal_form_vertical" class="modal fade" tabindex="-1">
+    <div id="js-add-category-modal" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
+                     <h5 class="modal-title" id="js-modal-title">Category form</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Vertical form</h5>
+
                 </div>
 
                 <form action="" id="categoryForm">
                     @csrf
+                    <input type="hidden" name="category_id" id="js-category-id" value="">  {{--assign input id here for the edit and delete --}}
                     <div class="modal-body">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12">
                                     <label>Name</label>
                                     <input type="text" placeholder="Enter category name" name="name"
-                                        class="form-control">
+                                       id="js-category-name" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -65,7 +64,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label for="is_active">Is Active</label>
-                                    <select name="is_active" id="is_active" class="form-control">
+                                    <select name="is_active" id="js-is_active" class="form-control">
                                         <option selected disabled> Select Status </option>
                                         <option value="1" >Active</option>
                                         <option value="0">Inactive</option>
@@ -86,12 +85,6 @@
     <!-- /vertical form modal -->
 @endsection
 @section('js')
-    <script src="{{ asset('../global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
-    <script src="{{ asset('../global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-
-
-    <script src="{{ asset('../global_assets/js/demo_pages/datatables_basic.js') }}"></script>
-
     <script>
         $(document).ready(function() {
 
@@ -118,7 +111,7 @@
                 validClass: "is-valid",
                 errorElement: "div",
                 errorPlacement: function(error, element) {
-                    error.addClass("invalid-feedback"); 
+                    error.addClass("invalid-feedback");
                     element.closest(".form-group").append(error);
                 },
                 highlight: function(element) {
@@ -133,20 +126,17 @@
                         $url: "{{ route('category.store') }}",
                         type: "POST",
                         data: $(form).serialize(),
+                        beforeSend: function(xhr) {
+                            xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+                        }, // must send token here
                         success: function(response) {
                             if (response.success) {
                                 toastr.success(response.message, "Success");
-                                $('#modal_form_vertical').modal('hide');
+                                $('#js-add-category-modal').modal('hide');
                                 $('#categoryTableBody').html();
                                 $('#categoryTableBody').html(response.html);
-                                $('#modal_form_vertical').modal('hide');
                                 $('#categoryForm')[0].reset();
                                 $(".form-control").removeClass("is-valid");
-
-                                // Optionally reload DataTable here
-                                if ($.fn.DataTable.isDataTable('#yourTableID')) {
-                                    $('#yourTableID').DataTable().ajax.reload();
-                                }
                             }
 
                         },
@@ -163,6 +153,8 @@
                         }
                     });
 
+
+
                     return false;
 
                 },
@@ -171,6 +163,81 @@
                 }
 
             });
+
+            //Edit Category starts here
+            $(document).on('click','#js-edit-category-button',function(){
+                event.preventDefault();
+                var id = $(this).data("id");
+                var href = "{{ route('category.edit',':id') }}".replace(':id',id);
+
+                $.ajax({
+                    url:href,
+                    type:"GET",
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+                    },
+                    success:function(response){
+                        if(response.success){
+                            $("#js-category-id").val(response.data.id);
+                            $("#js-category-name").val(response.data.name);
+                            $("#js-is_active").val(response.data.is_active);
+                            $("#js-modal-title").val("Edit Category Form");
+                            $("#js-add-category-modal").modal('show')
+                        }
+                        else{
+                            toastr.error(response.message,"error");
+                        }
+
+                    }
+                });
+                return false;
+            });
+            // Edit Category ends here
+
+            //Delete Category Starts here
+            $(document).on('click','#js-delete-category-button',function(){
+                event.preventDefault();
+                var id = $(this).data("id");
+
+                Swal.fire({
+                    title:"are you sure?",
+                    text:"You want to delete this category",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result)=>{
+                    if(result.isConfirmed){
+                        var href = "{{ route('category.destroy',':id') }}".replace(':id',id);
+                        $.ajax({
+                            url:href,
+                            type:"DELETE",
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+                            },
+                            success:function(response){
+                                console.log(response);
+                                if(response.success){
+                                    toastr.success(response.message, "success");
+                                    $('#categoryTableBody').html('');
+                                    $('#categoryTableBody').html(response.html);
+                                }
+                                 else{
+                                    toastr.error(response.message, "error");
+                                }
+
+
+                            },
+                            error: function(xhr, status, error) {
+                                toastr.error("An error occurred while deleting the sub-category.", "error");
+                            }
+                        });
+                    }
+                });
+
+            });
+            // Delete Category ends here
         });
     </script>
 @endsection

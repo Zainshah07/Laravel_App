@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
-use App\Http\Controllers\Auth\AuthController;
-use Illuminate\Support\Facades\Route;
 
 // Login and Register Routes//
 
@@ -28,9 +29,11 @@ Route::middleware(['auth'])->group(function () {
 
 // Category Routes//
 
-Route::middleware(['auth'])->controller(CategoryController::class)->group(function () {
-    Route::get('/category', 'index')->name('category.index');
-    Route::post('/category', 'store')->name('category.store');
+Route::middleware(['auth'])->controller(CategoryController::class)->prefix('category')->name('category.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::post('/', 'store')->name('store');
+    Route::get('/edit/{id}','edit')->name('edit');
+    Route::delete('/destroy/{id}','destroy')->name('destroy');
 });
 
 // Sub Category Routes//
@@ -39,6 +42,14 @@ Route::middleware(['auth'])->controller(SubCategoryController::class)->prefix('s
     Route::post('/', 'store')->name('store');
     Route::get('/edit/{id}', 'edit')->name('edit');
     Route::delete('/destroy/{id}', 'destroy')->name('destroy');
+});
+
+// Product Routes//
+Route::middleware('auth')->controller(ProductController::class)->prefix('product')->name('product.')->group(function(){
+    Route::get('/','index')->name('index');
+    Route::post('/','store')->name('store');
+    Route::get('/edit/{id}','edit')->name('edit');
+    Route::delete('/destroy/{id}','destroy')->name('destroy');
 });
 
 // Forget Password and Reset Form Routes//

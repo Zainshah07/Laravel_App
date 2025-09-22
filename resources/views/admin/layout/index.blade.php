@@ -436,11 +436,11 @@
 
                         <!-- Main -->
                         <li class="nav-item-header">
-                            <div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu"
+                            <div class="text-uppercase font-size-xs line-height-xs">Menu</div> <i class="icon-menu"
                                 title="Main"></i>
                         </li>
                         <li class="nav-item">
-                            <a href="index.html" class="nav-link">
+                            <a href="" class="nav-link">
                                 <i class="icon-home4"></i>
                                 <span>
                                     Dashboard
@@ -449,14 +449,14 @@
                             </a>
                         </li>
                         <li class="nav-item nav-item-submenu">
-                            <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Layouts</span></a>
+                            <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Ecommerce</span></a>
 
                             <ul class="nav nav-group-sub" data-submenu-title="Layouts">
                                 <li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link active">Category</a>
                                 </li>
                                 <li class="nav-item"><a href="{{ route('sub-category.index') }}"
                                         class="nav-link">Sub-Catagory</a></li>
-                                <li class="nav-item"><a href=""
+                                <li class="nav-item"><a href="{{ route('product.index') }}"
                                         class="nav-link">Product</a></li>
 
                             </ul>
@@ -492,34 +492,7 @@
                                 class="icon-more"></i></a>
                     </div>
 
-                    <div class="header-elements d-none">
-                        <div class="breadcrumb justify-content-center">
-                            <a href="#" class="breadcrumb-elements-item">
-                                <i class="icon-comment-discussion mr-2"></i>
-                                Support
-                            </a>
 
-                            <div class="breadcrumb-elements-item dropdown p-0">
-                                <a href="#" class="breadcrumb-elements-item dropdown-toggle"
-                                    data-toggle="dropdown">
-                                    <i class="icon-gear mr-2"></i>
-                                    Settings
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account
-                                        security</a>
-                                    <a href="#" class="dropdown-item"><i class="icon-statistics"></i>
-                                        Analytics</a>
-                                    <a href="#" class="dropdown-item"><i class="icon-accessibility"></i>
-                                        Accessibility</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a href="#" class="dropdown-item"><i class="icon-gear"></i> All
-                                        settings</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!-- /breadcrumb line -->
 
@@ -552,8 +525,8 @@
 
                 <div class="navbar-collapse collapse" id="navbar-footer">
                     <span class="navbar-text">
-                        &copy; 2015 - 2018. <a href="#">Limitless Web App Kit</a> by <a
-                            href="http://themeforest.net/user/Kopyov" target="_blank">Eugene Kopyov</a>
+                        &copy; 2025 <a href="#">Ecommerce App</a> by <a
+                            href="http://themeforest.net/user/Kopyov" target="_blank">Zain</a>
                     </span>
 
                     <ul class="navbar-nav ml-lg-auto">

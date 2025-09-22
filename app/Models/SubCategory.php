@@ -17,6 +17,9 @@ class SubCategory extends Model
         'category_id',
         'is_active',
     ];
+        const ACTIVE_STATUS = 1;
+
+    const INACTIVE_STATUS = 0;
 
     // Relationships
     public function category()
@@ -27,5 +30,10 @@ class SubCategory extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }

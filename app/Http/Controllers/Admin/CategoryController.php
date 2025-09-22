@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -16,23 +17,40 @@ class CategoryController extends Controller
         return view('admin.catagory.index', compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $request->validate([
-            'name' => 'required|min:3',
-            'is_active' => 'required|boolean',
-        ]);
 
-        $category = Category::create([
+        $id=$request->category_id ?? null;
+
+        Category::updateOrCreate(
+            ['id'=>$id],
+            [
             'name' => $request->name,
             'slug' => Str::slug($request->name),
-            'user_id' => auth()->id(),
+            'user_id' => auth()->user()->id,
             'is_active' => $request->is_active,
         ]);
 
-        if ($category) {
+
             return $this->getLatestRecord('Record Store Successfully', true);
-        }
+
+    }
+
+    //Edit function
+
+    public function edit($id){
+        $category = Category::find($id);
+        return response()->json([
+            'success'=>true,
+            'data'=>$category
+        ]);
+
+    }
+
+    public function destroy($id){
+        $category = Category::find($id);
+        $category->delete();
+        return $this->getLatestRecord('Record Deleted Successfuly', true);
     }
 
     private function getLatestRecord($message = 'Record Saved Successfully', $success = true)

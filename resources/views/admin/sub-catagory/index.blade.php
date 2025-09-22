@@ -181,7 +181,7 @@
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
                     },
-                    success: function(response) 
+                    success: function(response)
                     {
                         if(response.success){
                             $("#js-sub-category-id").val(response.data.id);

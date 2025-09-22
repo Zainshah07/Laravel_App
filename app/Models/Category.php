@@ -21,8 +21,30 @@ class Category extends Model
 
     const INACTIVE_STATUS = 0;
 
-    public function sub_category()
+    public function subCategory()
     {
         return $this->hasMany(SubCategory::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($category) {
+            if ($category->isForceDeleting()) {
+                // If force deleting, delete subcategories from DB
+                $category->sub_category()->forceDelete();
+            } else {
+                // If soft deleting, soft delete subcategories too
+                $category->sub_category()->delete();
+            }
+        });
     }
 }
