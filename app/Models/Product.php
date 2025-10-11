@@ -19,6 +19,9 @@ class Product extends Model
         'cost_price_per_unit',
         'is_active',
     ];
+       const ACTIVE_STATUS = 1;
+
+        const INACTIVE_STATUS = 0;
 
       public function getImagesAttribute($value){
       if (!$value) {

@@ -10,8 +10,8 @@
             <td>{{ optional($product->category)->name ?? 'No Category Found' }}</td>
             <td>{{ optional($product->sub_category)->name ?? 'No sub category Found' }}</td>
             <td><img src="{{ $product->images }}" alt="{{ $product->name }}" width="50" height="50"></td>
-            <td>{{ $product->unit_price }}</td>
-            <td>{{ $product->cost_price_per_unit }}</td>
+            <td>${{ $product->unit_price }}</td>
+            <td>${{ $product->cost_price_per_unit }}</td>
             <td>
                 <span class="badge badge-{{ $product->is_active ? 'success' : 'danger' }}">
                     {{ $product->is_active ? 'Active' : 'In-Active' }}

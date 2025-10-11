@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
@@ -26,6 +27,11 @@ class DropdownController extends Controller
         ->get(['id', 'name']);
 
     return response()->json(['success' => true, 'data' => $subCategories]);
+}
+
+public function getProducts(Request $request){
+    $products=Product::where('is_active', Product::ACTIVE_STATUS)->orderBy('name','asc')->get(['id','name']);
+    return response()->json(['success'=>true, 'data'=>$products]);
 }
 
 }

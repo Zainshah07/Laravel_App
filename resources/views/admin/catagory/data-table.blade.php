@@ -4,7 +4,6 @@
             <td>{{ $loop->iteration }}</td>
             <td>{{ $category->name }}</td>
             <td>{{ $category->slug }} </td>
-            <td>{{ $category->user_id }}</td>
             <td>
                 <span class="badge badge-{{ $category->is_active ? 'success' : 'danger' }}">
                     {{ $category->is_active ? 'Active' : 'In-Active' }}

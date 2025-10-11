@@ -22,7 +22,6 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Slug</th>
-                        <th>User_Id</th>
                         <th>Status</th>
                         <th>Actions</th>
 
@@ -41,14 +40,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                     <h5 class="modal-title" id="js-modal-title">Category form</h5>
+                     <h5 class="modal-title" id="js-modal-title">Add Category</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
 
                 </div>
 
                 <form action="" id="categoryForm">
                     @csrf
-                    <input type="hidden" name="category_id" id="js-category-id" value="">  {{--assign input id here for the edit and delete --}}
+                    <input type="hidden" name="category_id" id="js-category-id" value="">  
                     <div class="modal-body">
                         <div class="form-group">
                             <div class="row">
@@ -76,7 +75,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                        <button class="btn btn-primary">Submit form</button>
+                        <button id="js-submit-button"class="btn btn-primary">Add</button>
                     </div>
                 </form>
             </div>
@@ -131,7 +130,7 @@
                         data: $(form).serialize(),
                         beforeSend: function(xhr) {
                             xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
-                        }, // must send token here
+                        },
                         success: function(response) {
                             if (response.success) {
                                 toastr.success(response.message, "Success");
@@ -184,7 +183,8 @@
                             $("#js-category-id").val(response.data.id);
                             $("#js-category-name").val(response.data.name);
                             $("#js-is_active").val(response.data.is_active);
-                            $("#js-modal-title").val("Edit Category Form");
+                            $("#js-modal-title").text("Edit Category");
+                            $("#js-submit-button").text("Update");
                             $("#js-add-category-modal").modal('show')
                         }
                         else{

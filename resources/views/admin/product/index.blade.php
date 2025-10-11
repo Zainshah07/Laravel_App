@@ -143,7 +143,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                        <button class="btn btn-primary">Save</button>
+                        <button id="js-submit-button" class="btn btn-primary">Add</button>
                     </div>
                 </form>
             </div>
@@ -194,7 +194,7 @@
                         required: "select a category"
                     },
 
-                 
+
 
                     unit_price: {
                         required: "enter the unit price"
@@ -292,7 +292,8 @@
                                     .trigger("change");
                             }, 500);
 
-                 $("#js-modal-title").text("Edit Product");
+                            $("#js-modal-title").text("Edit Product");
+                            $("#js-submit-button").text("Update");
                             $("#js-product-modal").modal('show');
                         }
                         else{
@@ -343,8 +344,8 @@
                             }
                         })
                     }
-                })
-            })
+                });
+            });
 
 
 
@@ -352,8 +353,8 @@
             $("#js-add-product-button").click(function() {
 
                 $("#productForm")[0].reset();
-                $("#js-modal-title").text("Add Product title");
-
+                $("#js-modal-title").text("Add Product");
+                $("#js-submit-button").text("Add");
                 $("#js-category-dropdown").html('<option value="" selected disabled>Select Category</option>');
                 $("#js-sub_category-dropdown").html('<option value="" selected disabled>Select Sub-Category</option>');
 

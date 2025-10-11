@@ -448,19 +448,33 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="nav-item nav-item-submenu">
+                        <li class="nav-item nav-item-submenu {{ request()->routeIs('category.*','sub-category.*','product.*') ? 'nav-item-open' : '' }}">
                             <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Ecommerce</span></a>
 
-                            <ul class="nav nav-group-sub" data-submenu-title="Layouts">
-                                <li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link active">Category</a>
+                            <ul class="nav nav-group-sub" data-submenu-title="Layouts" style="{{ request()->routeIs('category.*','sub-category.*','product.*') ? 'display:block;' : '' }}">
+                                <li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link  {{ request()->routeIs('category.*') ? 'active' : '' }}">Category</a>
                                 </li>
                                 <li class="nav-item"><a href="{{ route('sub-category.index') }}"
-                                        class="nav-link">Sub-Catagory</a></li>
+                                        class="nav-link {{ request()->routeIs('sub-category.*') ? 'active' : '' }}">Sub-Catagory</a></li>
                                 <li class="nav-item"><a href="{{ route('product.index') }}"
-                                        class="nav-link">Product</a></li>
+                                        class="nav-link {{ request()->routeIs('product.*') ? 'active' : '' }}">Product</a></li>
+
 
                             </ul>
+
                         </li>
+                         <li class="nav-item nav-item-submenu {{ request()->routeIs('category.*','sub-category.*','product.*') ? 'nav-item-open' : '' }}">
+                            <a href="#" class="nav-link"><i class="icon-copy"></i> <span>POS</span></a>
+                             <ul class="nav nav-group-sub" data-submenu-title="Layouts" style="{{ request()->routeIs('pos.*','order.*',) ? 'display:block;' : '' }}">
+                                <li class="nav-item">
+                                    <a href="{{ route('pos.index') }}" class="nav-link {{ request()->routeIs('pos.*') ? 'active' : '' }} ">Create Product order</a>
+                                </li>
+                                <li class="nav-item"><a href="{{ route('order.index') }}" class="nav-link {{ request()->routeIs('order.*') ? 'active' : '' }}">Orders</a>
+                                </li>
+                             </ul>
+
+                         </li>
+
 
                     </ul>
                 </div>
